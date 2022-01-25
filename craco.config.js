@@ -1,19 +1,33 @@
 const path = require('path');
 const PKG = require('./package');
-const {when, whenDev, whenProd, whenTest, removePlugins, pluginByName} = require('@craco/craco');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+//  whenTest,  whenDev,
+const {when, whenProd, removePlugins, pluginByName, getLoader, loaderByName} = require('@craco/craco');
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const CracoLessPlugin = require('craco-less');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const webpack = require('webpack');
 
 
 const pathResolve = pathUrl => path.join(__dirname, pathUrl);
+
 module.exports = ({env}) => {
   console.log('webpack env:', env);
-  // console.log('process.env.REACT_APP_ZIP:',process.env.REACT_APP_ZIP)
   return {
-    reactScriptsVersion: 'react-scripts' /* (default value) */,
+    reactScriptsVersion: 'react-scripts',
     style: {},
-    babel: {},
+    babel: {
+      plugins: [
+        [
+          'import',
+          {
+            'libraryName': 'antd',
+            'libraryDirectory': 'es',
+            'style': true //设置为true即是less 这里用的是css
+          }
+        ]
+      ]
+    },
     devServer: (devServerConfig, {env, paths, proxy, allowedHost}) => {
       /**
        * 该配置项已弃用，以支持 devServer.setupMiddlewares。
@@ -28,11 +42,19 @@ module.exports = ({env}) => {
         '@': pathResolve('src')
       },
       configure: (webpackConfig, {env, paths}) => {
-        paths.appBuild = path.join(path.dirname(paths.appBuild), 'dist');
-        webpackConfig.stats= 'errors-only';
 
+        // console.log(webpackConfig);
+        // webpackConfig.module.rules[0].oneOf.forEach((i)=>{
+        //   console.log(i)
+        // });
+        //引入src目录外的的文件
+        webpackConfig.resolve.plugins = webpackConfig.resolve.plugins.filter((plugin) => {
+          return !(plugin instanceof ModuleScopePlugin);
+        });
+        paths.appBuild = path.join(path.dirname(paths.appBuild), 'dist');
+        webpackConfig.stats = 'errors-only';
+        webpackConfig.ignoreWarnings = [/Failed to parse source map/];
         whenProd(() => {
-          // console.log(webpackConfig.plugins);
           webpackConfig.devtool = false;
           // 关闭协议
           webpackConfig.optimization.minimizer[0].options.extractComments = false;
@@ -62,8 +84,13 @@ module.exports = ({env}) => {
               }
             })];
           }, []),
+          new AntdDayjsWebpackPlugin(),
           new webpack.DefinePlugin({
-            AUTHOR: 'sss_fan@126.com'
+            AUTHOR: 'sss_fan@126.com',
+            VERSION: JSON.stringify(PKG.version)
+          }),
+          new webpack.BannerPlugin({
+            banner: 'sss_fan@126.com'
           })
         ]
       }
@@ -75,9 +102,9 @@ module.exports = ({env}) => {
           lessLoaderOptions: {
             lessOptions: {
               modifyVars: {
-                '@primary-color': '#1DA57A',
-                '@link-color': '#1DA57A',
-                '@border-radius-base': '2px'
+                '@primary-color': '#107BF5'
+                // '@link-color': '#1DA57A',
+                // '@border-radius-base': '2px'
               },
               sourceMap: false,
               javascriptEnabled: true
@@ -94,8 +121,8 @@ module.exports = ({env}) => {
             });
             return lessRule;
           },
+
           modifyLessModuleRule: (lessModuleRule, context) => {
-            // console.log(lessModuleRule.use);
             lessModuleRule.use.push({
               loader: 'style-resources-loader',
               options: {
@@ -104,7 +131,6 @@ module.exports = ({env}) => {
                 ]
               }
             });
-
             return lessModuleRule;
           }
         }
