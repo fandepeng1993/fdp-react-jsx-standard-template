@@ -29,7 +29,7 @@ module.exports = function ({ env }) {
                     return !(plugin instanceof ModuleScopePlugin);
                 });
                 // 参见环境变量
-                paths.appBuild = path.join(path.dirname(paths.appBuild), 'dist/desktron-devops-frontend');
+                paths.appBuild = path.join(path.dirname(paths.appBuild), `dist/${PKG.name}`);
                 webpackConfig.stats = 'errors-only';
                 webpackConfig.ignoreWarnings = [/Failed to parse source map/];
                 whenDev(() => {
@@ -106,12 +106,12 @@ module.exports = function ({ env }) {
                             events: {
                                 onEnd: {
                                     delete: [
-                                        `./dist/desktron-devops-frontend/${PKG.name}_*.tar.gz`
+                                        `./dist/${PKG.name}/${PKG.name}_*.tar.gz`
                                     ],
                                     archive: [
                                         {
-                                            source: `./dist/desktron-devops-frontend/`,
-                                            destination: `./dist/desktron-devops-frontend/${PKG.name}_${PKG.version}.tar.gz`,
+                                            source: `./dist/${PKG.name}/`,
+                                            destination: `./${PKG.name}/${PKG.name}_${PKG.version}.tar.gz`,
                                             options:{
                                                 gzip: true,
                                                 gzipOptions: {
@@ -132,11 +132,11 @@ module.exports = function ({ env }) {
                         return [new BundleAnalyzerPlugin()]
                     }, []),
                     new webpack.DefinePlugin({
-                        AUTHOR: 'sss_fan@126.com',
+                        AUTHOR: `${PKG.author}`,
                         VERSION: JSON.stringify(PKG.version)
                     }),
                     new webpack.BannerPlugin({
-                        banner: 'sss_fan@126.com'
+                        banner: `${PKG.author}`
                     })
                 ]
             },
