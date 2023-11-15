@@ -1,10 +1,10 @@
 {
-  "name": "desktron-devops-frontend",
+  "name": "{{name}}",
   "version": "0.1.1",
   "private": true,
   "homepage": ".",
-  "description": "desktron devops frontend",
-  "author": "sss_fan@126.com",
+  "description": "{{description}}",
+  "author": "{{author}}",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
