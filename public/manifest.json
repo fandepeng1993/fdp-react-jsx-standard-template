@@ -1,11 +1,16 @@
 {
-  "short_name": "Demo React",
-  "name": "Demo React Sample",
+  "short_name": "desktron devops",
+  "name": "desktron devops frontend",
   "icons": [
     {
       "src": "favicon.svg",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "192x192 512x512 64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "logo.svg",
+      "type": "image/png",
+      "sizes": "512x512 192x192"
     }
   ],
   "start_url": ".",

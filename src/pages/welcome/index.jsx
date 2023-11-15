@@ -1,10 +1,13 @@
 import {useTranslation} from 'react-i18next';
-import i18next from 'i18next';
 import styles from './index.module.less'
+import { useDispatch } from 'react-redux';
+import { SETTINGS } from '../../store/actions';
 const Welcome = () => {
   const {t} = useTranslation();
-  const changeLng = (lng) => {
-    i18next.changeLanguage(lng);
+  const dispatch = useDispatch();
+  const changeLng = async (lng) => {
+    // i18next.changeLanguage(lng);
+    await dispatch({type: SETTINGS.CHANGELANGUAGE, payload: lng})
   };
   return (
     <div>

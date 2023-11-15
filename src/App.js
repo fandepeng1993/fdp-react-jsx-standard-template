@@ -1,36 +1,43 @@
-import React, {Suspense} from 'react';
+import { useSelector } from 'react-redux';
+import React, {Suspense, useMemo} from 'react';
 import {MemoryRouter, HashRouter,Routes,Link} from 'react-router-dom';
+import {ConfigProvider} from 'antd';
 import routes from '@/routers';
-import {useSelector} from 'react-redux';
+import zhCN from 'antd/locale/zh_CN';
+import enUS from 'antd/locale/en_US';
 import routeWithSubRoutes from './layout/RouteWithSubRoutes';
 import LazyLoading from './components/lazy-loading';
 
-// import {useTranslation} from 'react-i18next';
-// import LazyImage from "./components/lazy-image";
-
 // 开发环境下启用哈希路由。生产环境下启用内存路由
-const Router = process.env.NODE_ENV === 'development' ? HashRouter : MemoryRouter;
-
+const Router = process.env.NODE_ENV === 'development' ? HashRouter : HashRouter;
 function App() {
-  const {theme} = useSelector((state => state.settings));
-  return (
-    <div className={`${theme} App`}>
-      <Router>
-        <Suspense fallback={<LazyLoading/>}>
-          <Routes>
-            {routeWithSubRoutes(routes)}
-          </Routes>
-        </Suspense>
-        <nav>
-          <Link to="/">Layout</Link> |{' '}
-          <Link to="/erizo">erizo</Link> |{' '}
-          <Link to="/login">login</Link> |{' '}
-          <Link to="/welcome">welcome</Link> |{' '}
-          <Link to="/express">express</Link> |{' '}
-        </nav>
-      </Router>
+  const {language} = useSelector((state => state.settings));
+  const locale = useMemo(()=>{
+    let _locale = null;
+    switch(language){
+      case 'en-US':
+        _locale = enUS;
+        break;
+      case 'zh-CN':
+        _locale = zhCN;
+      default:
+        break;
+    }
+    return _locale;
+  },[language])
 
+  return (
+    <ConfigProvider locale={locale}>
+      <div className={`App`}>
+        <Router>
+          <Suspense fallback={<LazyLoading/>}>
+            <Routes>
+              {routeWithSubRoutes(routes)}
+            </Routes>
+          </Suspense>
+      </Router>
     </div>
+  </ConfigProvider>
   );
 }
 

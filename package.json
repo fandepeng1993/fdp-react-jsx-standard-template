@@ -1,53 +1,43 @@
 {
-  "name": "{{name}}",
-  "version": "0.1.0",
+  "name": "desktron-devops-frontend",
+  "version": "0.1.1",
   "private": true,
   "homepage": ".",
-  "description": "{{description}}",
-  "author": "{{author}}",
+  "description": "desktron devops frontend",
+  "author": "sss_fan@126.com",
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "^6.2.1"
-  },
-  "devDependencies": {
-    "@craco/craco": "^6.4.3",
-    "@formatjs/intl-pluralrules": "^4.2.1",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
+    "@reduxjs/toolkit": "^1.9.7",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "antd-dayjs-webpack-plugin": "^1.0.6",
-    "craco-less": "^2.0.0",
-    "filemanager-webpack-plugin": "^6.1.7",
-    "i18next": "^21.6.5",
-    "i18next-http-backend": "^1.3.1",
-    "react-i18next": "^11.15.3",
-    "react-redux": "^7.2.6",
-    "react-scripts": "5.0.0",
-    "redux": "^4.1.2",
+    "antd": "^5.11.1",
+    "i18next": "^23.7.6",
+    "i18next-http-backend": "^2.4.1",
+    "js-cookie": "^3.0.5",
+    "nprogress": "^0.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^13.4.1",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.18.0",
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
-    "redux-saga": "^1.1.3",
-    "style-resources-loader": "^1.5.0",
+    "redux-saga": "^1.2.3",
     "umi-request": "^1.4.0",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "window-start": "set REACT_APP_ENV=dev && craco start",
-    "mac-start": "REACT_APP_ENV=dev craco start",
-    "window-build:dev": "set REACT_APP_ENV=dev &&  craco build",
-    "window-build:test": "set REACT_APP_ENV=test && craco build",
-    "window-build:live": "set REACT_APP_ENV=live && craco build",
-    "mac-build:dev": "REACT_APP_ENV=dev craco build",
-    "mac-build:test": "REACT_APP_ENV=test craco build",
-    "mac-build:live": "REACT_APP_ENV=live craco build",
-    "window-zip:dev": "set REACT_APP_ZIP=true REACT_APP_ENV=dev && craco build",
-    "window-zip:test": "set REACT_APP_ZIP=true REACT_APP_ENV=test && craco build",
-    "window-zip:live": "set REACT_APP_ZIP=true REACT_APP_ENV=live && craco build",
-    "mac-zip:dev": "REACT_APP_ZIP=true REACT_APP_ENV=dev craco build",
-    "mac-zip:test": "REACT_APP_ZIP=true REACT_APP_ENV=test craco build",
-    "mac-zip:live": "REACT_APP_ZIP=true  REACT_APP_ENV=live craco build",
-    "test": "craco test",
+    "analyzer": "cross-env REACT_APP_ANALYZER=true REACT_APP_ENV=dev craco build",
+    "start": "cross-env REACT_APP_ENV=dev craco start",
+    "start:qas": "cross-env REACT_APP_ENV=qas craco start",
+    "build:dev": "cross-env REACT_APP_ENV=dev craco build",
+    "build:qas": "cross-env REACT_APP_ENV=qas craco build",
+    "build:prod": "cross-env REACT_APP_ENV=prod craco build",
+    "zip:dev": "cross-env REACT_APP_ZIP=true REACT_APP_ENV=dev craco build",
+    "zip:qas": "cross-env REACT_APP_ZIP=true REACT_APP_ENV=qas craco build",
+    "zip:prod": "cross-env REACT_APP_ZIP=true REACT_APP_ENV=prod craco build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,7 +48,9 @@
     "rules": {
       "no-undef": "off",
       "no-fallthrough": "off",
-      "no-unused-vars": "off"
+      "no-unused-vars": "off",
+      "no-restricted-globals": "off",
+      "no-cond-assign": "off"
     }
   },
   "browserslist": {
@@ -72,5 +64,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "craco-less": "^3.0.1",
+    "cross-env": "^7.0.3",
+    "filemanager-webpack-plugin": "^8.0.0",
+    "style-resources-loader": "^1.5.0",
+    "webpack-bundle-analyzer": "^4.9.1"
   }
 }

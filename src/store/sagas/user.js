@@ -1,22 +1,18 @@
-import {
-  call, put, takeLatest
-} from 'redux-saga/effects';
-import {TESTUSER} from '../actions';
-import {gettestData} from '@/services';
+import {all,call, put, takeLatest} from 'redux-saga/effects';
+import {USERINFO} from '../actions';
 
 
-function* testuserApply() {
-  const res = yield call(gettestData);
-  console.log('res=====>', res);
+
+function* getUserInfo(data) {
+    yield console.log('yield getUserInfo res=====>', data);
 }
 
-function* testuserSaga() {
 
-  yield takeLatest(TESTUSER.GETUSERINFO, testuserApply);
-
+function* userSaga() {
+    yield takeLatest(USERINFO.GTEUSERINFO,getUserInfo);
 }
 
-export default testuserSaga;
+export default userSaga;
 
 
 /*2.redux-saga的执行流程

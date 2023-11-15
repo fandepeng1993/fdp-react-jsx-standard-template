@@ -1,16 +1,13 @@
 import {SETTINGS} from '../actions';
 
 const initState = {
-  language: 'en-US',
-  theme: 'day',
+  language: 'zh-CN',
 };
 
 const settings = (state = initState, action) => {
   switch (action.type) {
     case SETTINGS.UPDATELANGUAGE:
       return {...state, language: action.payload};
-    case SETTINGS.UPDATETHEME:
-      return {...state, theme: action.payload};
     default:
       return state;
   }

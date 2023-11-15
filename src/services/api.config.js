@@ -1,5 +1,5 @@
 const API ={
-    testurl:'/usersdd',
+    testurl:'/users',
     testurlsure:'/users'
 };
 

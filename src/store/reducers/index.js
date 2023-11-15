@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from '@reduxjs/toolkit';
 import userInfo from './user';
 import settings from './settings';
 

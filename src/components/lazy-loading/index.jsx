@@ -1,5 +1,4 @@
 import './index.less';
-import React from 'react';
 import {useSelector} from 'react-redux';
 
 const LazyLoading = () => {
